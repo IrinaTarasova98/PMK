@@ -22,40 +22,40 @@ START:  ; метка начала программы
 
 FRAME_0:	  ; выключить все диоды
 		LCALL	SET_DIODE	; запись в регистр указателя адрес регистра светодиодов
-		MOV		A, #0		; записать диоды для включения (00000000b)
+		MOV	A, #0		; записать диоды для включения (00000000b)
 		MOVX	@DPTR, A	; запись значения из A в регистр светодиодов
 		LCALL	DELAY		; время чтобы отпустить клавишу 
 		LCALL	KEY_DOWN	; проверка нажатия клавиши
-		JNZ 		FRAME_0		; если клавиша не нажата повторить FRAME_0
+		JNZ 	FRAME_0		; если клавиша не нажата повторить FRAME_0
 FRAME_1:	  ; включить ДВА центральных диода
 		LCALL	SET_DIODE
-		MOV		A, #24
+		MOV	A, #24
 		MOVX	@DPTR, A
 		LCALL	DELAY
 		LCALL	KEY_DOWN	
-		JNZ		FRAME_1	
+		JNZ	FRAME_1	
 FRAME_2:  ; включить ЧЕТЫРЕ центральных диода
 		LCALL	SET_DIODE
-		MOV		A, #60
+		MOV	A, #60
 		MOVX	@DPTR, A
 		LCALL	DELAY
 		LCALL	KEY_DOWN
-		JNZ		FRAME_2
+		JNZ	FRAME_2
 FRAME_3:	 ; включить ШЕСТЬ центральных диодов
 		LCALL	SET_DIODE
-		MOV		A, #126
+		MOV	A, #126
 		MOVX	@DPTR, A
 		LCALL	DELAY
 		LCALL	KEY_DOWN
-		JNZ		FRAME_3
+		JNZ	FRAME_3
 FRAME_4:  ; включить ВОСЕМЬ центральных диодов
 		LCALL	SET_DIODE
-		MOV		A, #255
+		MOV	A, #255
 		MOVX	@DPTR, A
 		LCALL	DELAY
 		LCALL	KEY_DOWN
-		JNZ		FRAME_4		; если клавиша не нажата повторить FRAME_4
-		JZ		FRAME_0		; иначе перейти к FRAME_0 (в начало)
+		JNZ	FRAME_4		; если клавиша не нажата повторить FRAME_4
+		JZ	FRAME_0		; иначе перейти к FRAME_0 (в начало)
 		RET
 
 ; XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX ;
@@ -68,9 +68,9 @@ FRAME_4:  ; включить ВОСЕМЬ центральных диодов
 
 KEY_DOWN:  ; проверка нажатия клавиши * 
 		; клавиатура
-		MOV		DPL, #0
+		MOV	DPL, #0
 		MOV 	DPH, #0
-		MOV		DPP, #8
+		MOV	DPP, #8
 
 		; COL1 (11111110b)
 		MOV 	A, #0FEh
@@ -81,19 +81,19 @@ KEY_DOWN:  ; проверка нажатия клавиши *
 		RET
 
 SET_DIODE:  ; запись в регистр указателя адрес регистра светодиодов
-		MOV		DPL,#7
-		MOV		DPH,#0
-		MOV		DPP,#8
+		MOV	DPL,#7
+		MOV	DPH,#0
+		MOV	DPP,#8
 		RET
 
 DELAY:  ; подпрограмма задержки
-		MOV		R3, #20
+		MOV	R3, #20
 D8933:
-		MOV		R2, #20
+		MOV	R2, #20
 D8932:
-		MOV		R1, #15
+		MOV	R1, #15
 D8931:
-		MOV		R0, #15
+		MOV	R0, #15
 		DJNZ	R0, $
 		DJNZ	R1, D8931
 		DJNZ	R2, D8932
